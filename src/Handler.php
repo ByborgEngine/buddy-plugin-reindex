@@ -8,13 +8,16 @@
   version. You should have received a copy of the GPL license along with this
   program; if you did not, you can find it at http://www.gnu.org/
 */
-namespace Manticoresearch\Buddy\Plugin\Template;
+namespace Manticoresearch\Buddy\Plugin\Reindex;
 
 use Manticoresearch\Buddy\Core\Plugin\BaseHandler;
+use Manticoresearch\Buddy\Core\Task\Column;
 use Manticoresearch\Buddy\Core\Task\Task;
 use Manticoresearch\Buddy\Core\Task\TaskResult;
 use RuntimeException;
 use parallel\Runtime;
+use function exec;
+use function join;
 
 final class Handler extends BaseHandler {
 	/**
@@ -33,9 +36,14 @@ final class Handler extends BaseHandler {
 	 * @throws RuntimeException
 	 */
 	public function run(Runtime $runtime): Task {
-		// TODO: your logic goes into closure and should return TaskResult as response
 		$taskFn = static function (): TaskResult {
-			return TaskResult::none();
+			$output = [];
+			$returnCode = 0;
+			exec('indexer --all --rotate', $output, $returnCode);
+			return TaskResult::withRow([
+				'output' => join(' , ', $output),
+				'returnCode' => $returnCode
+			])->column('output', Column::String)->column('returnCode', Column::Long);
 		};
 
 		return Task::createInRuntime(

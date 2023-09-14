@@ -1,19 +1,13 @@
 {
-	"name": "manticoresoftware/buddy-plugin-template",
-	"description": "The Buddy template handler plugin",
+	"name": "byborg-engine/buddy-plugin-reindex",
+	"description": "Manticore Buddy plugin for reindexing plain tables",
 	"type": "library",
-	"license": "GPL-2.0-or-later",
+	"license": "MIT",
 	"autoload": {
 		"psr-4": {
-			"Manticoresearch\\Buddy\\Plugin\\Template\\": "src/"
+			"Manticoresearch\\Buddy\\Plugin\\Reindex\\": "src/"
 		}
 	},
-	"authors": [
-		{
-			"name": "Manticore Software Co. Ltd",
-			"email": "contact@manticoresearch.com"
-		}
-	],
 	"minimum-stability": "stable",
 	"require": {
 		"manticoresoftware/buddy-core": "dev-main"
