@@ -39,7 +39,7 @@ final class Handler extends BaseHandler {
 		$taskFn = static function (): TaskResult {
 			$output = [];
 			$returnCode = 0;
-			exec('indexer --all', $output, $returnCode);
+			exec('indexer --all --rotate', $output, $returnCode);
 			return TaskResult::withRow([
 				'output' => join(' , ', $output),
 				'returnCode' => $returnCode
